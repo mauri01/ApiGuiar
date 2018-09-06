@@ -3,6 +3,7 @@ package com.example.controller;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import com.example.model.Role;
 import com.example.model.TargetManager;
 import com.example.repository.TargetManagerRepository;
 import com.example.service.FileService;
@@ -47,7 +48,16 @@ public class LoginController {
 	@RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("admin/login");
+		modelAndView.setViewName("login");
+		return modelAndView;
+	}
+
+	@RequestMapping(value="/firstRegistration", method = RequestMethod.GET)
+	public ModelAndView firstRegistration(){
+		ModelAndView modelAndView = new ModelAndView();
+		User user = new User();
+		modelAndView.addObject("user", user);
+		modelAndView.setViewName("firstRegistration");
 		return modelAndView;
 	}
 
@@ -61,7 +71,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
+	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult,@RequestParam(value = "i", required=false) Integer i) {
 		ModelAndView modelAndView = new ModelAndView();
 		User userExists = userService.findUserByEmail(user.getEmail());
 		if (userExists != null) {
@@ -70,30 +80,90 @@ public class LoginController {
 							"There is already a user registered with the email provided");
 		}
 		if (bindingResult.hasErrors()) {
-			modelAndView.setViewName("registration");
+			if(i != null){
+				modelAndView.addObject("errorMessage", "El mail ingresado ya existe en el sistema. Intente nuevamente");
+				modelAndView.setViewName("firstRegistration");
+			}else{
+				modelAndView.setViewName("registration");
+			}
 		} else {
 			userService.saveUser(user);
-			modelAndView.addObject("successMessage", "User has been registered successfully");
+			modelAndView.addObject("successMessage", "El usuario fue registrado exitosamente.");
 			modelAndView.addObject("user", new User());
-			modelAndView.setViewName("registration");
+			if(i != null){
+				modelAndView.setViewName("firstRegistration");
+			}else{
+				modelAndView.setViewName("registration");
+			}
 			
 		}
 		return modelAndView;
+	}
+
+	@RequestMapping(value = "/editUser", method = RequestMethod.POST)
+	public ModelAndView editUser(@Valid User user, BindingResult bindingResult) {
+		ModelAndView modelAndView = new ModelAndView();
+		User userExists = userService.findUserById(user.getId());
+		if (userExists != null) {
+			userService.updateUser(user);
+		}
+		if (bindingResult.hasErrors()) {
+			//modelAndView.setViewName("registration");
+
+		}
+		return new ModelAndView("redirect:/admin/user");
 	}
 	
 	@RequestMapping(value="/admin/home", method = RequestMethod.GET)
 	public ModelAndView home(){
 		ModelAndView modelAndView = new ModelAndView();
 		List<TargetManager> listTarget = targetManagerRepository.findAll();
+		List<User> listUser = userService.findAllUser();
 		modelAndView.addObject("targets", listTarget);
+		modelAndView.addObject("users", listUser);
 		modelAndView.setViewName("admin/index");
 		return modelAndView;
 	}
+
+	@RequestMapping(value="/admin/user", method = RequestMethod.GET)
+	public ModelAndView user(){
+		ModelAndView modelAndView = new ModelAndView();
+		List<User> listUser = userService.findAllUser();
+		modelAndView.addObject("users", listUser);
+		modelAndView.setViewName("admin/user");
+		return modelAndView;
+	}
+
+	@GetMapping("/user/{id}/remove")
+	public ModelAndView removeUser(@PathVariable("id") int id){
+		User user = userService.findUserById(id);
+		userService.softDeleteUser(user);
+		return new ModelAndView("redirect:/admin/user");
+	}
+
+	@GetMapping("/user/{id}/edit")
+	public ModelAndView editUser(@PathVariable("id") int id){
+		ModelAndView modelAndView = new ModelAndView();
+		User user = userService.findUserById(id);
+		List<Role> roles = userService.finAllRoles();
+		modelAndView.addObject("userEdit", user);
+		modelAndView.addObject("roles", roles);
+		modelAndView.setViewName("registration");
+		return modelAndView;
+	}
+
 
 	@RequestMapping(value="/admin/target", method = RequestMethod.GET)
 	public ModelAndView target(){
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("admin/target");
+		return modelAndView;
+	}
+
+	@RequestMapping(value="/admin/location", method = RequestMethod.GET)
+	public ModelAndView location(){
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("admin/location");
 		return modelAndView;
 	}
 
@@ -176,6 +246,13 @@ public class LoginController {
 		} catch (IOException ioe) {
 			System.out.println("Exception while reading the Image " + ioe);
 		}
+		return modelAndView;
+	}
+
+	@RequestMapping(value="/error", method = RequestMethod.GET)
+	public ModelAndView error(){
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("error");
 		return modelAndView;
 	}
 

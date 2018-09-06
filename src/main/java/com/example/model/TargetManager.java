@@ -25,6 +25,10 @@ public class TargetManager {
     @Column(name = "active")
     private boolean active;
 
+    @ManyToOne
+    @JoinColumn(name="location")
+    private Location location;
+
     public int getId() {
         return id;
     }

@@ -1,72 +1,211 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<html lang="en">
 <head>
-	<title>Registration Form</title>
-	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>MaterialAdminLTE 2 | General Form Elements</title>
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<STYLES> <!-- STYLES-->
+		<!-- Bootstrap 3.3.7 -->
+		<link th:href="@{/css/bootstrap/dist/css/bootstrap.min.css}"
+			  href="../../css/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+		<!-- Font Awesome -->
+		<link th:href="@{/css/font-awesome/css/font-awesome.min.css}"
+			  href="../../css/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+		<!-- Ionicons -->
+		<link th:href="@{/css/Ionicons/css/ionicons.min.css}" href="../../css/Ionicons/css/ionicons.min.css"
+			  rel="stylesheet"/>
+		<!-- Theme style -->
+		<link th:href="@{/css/AdminLTE.min.css}" href="../../css/AdminLTE.min.css" rel="stylesheet"/>
+		<!-- Material Design -->
+		<link th:href="@{/css/bootstrap-material-design.min.css}" href="../../css/bootstrap-material-design.min.css"
+			  rel="stylesheet"/>
+
+		<link th:href="@{/css/ripples.min.css}" href="../../css/ripples.min.css" rel="stylesheet"/>
+		<link th:href="@{/css/MaterialAdminLTE.min.css}" href="../../css/MaterialAdminLTE.min.css" rel="stylesheet"/>
+		<!-- AdminLTE Skins. Choose a skin from the css/skins -->
+		<link th:href="@{/css/skins/all-md-skins.min.css}" href="../../css/skins/all-md-skins.min.css"
+			  rel="stylesheet"/>
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+		<!-- Google Font -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+	</STYLES>
+
 </head>
-<body>
-	<form th:action="@{/}" method="get">
-		<button class="btn btn-md btn-warning btn-block" type="Submit">Go To Login Page</button>
-	</form>	
-	
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-				<form autocomplete="off" action="#" th:action="@{/registration}"
-					th:object="${user}" method="post" class="form-horizontal"
-					role="form">
-					<h2>Registration Form</h2>
-					<div class="form-group">
-						<div class="col-sm-9">
-						<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
-								class="validation-message"></label>
-						<input type="text" th:field="*{name}" placeholder="Name"
-								class="form-control" /> 
-						</div>
-					</div>
+<body onload="functionAlert();"class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
 
-					<div class="form-group">
-						<div class="col-sm-9">
-						<label	th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
-								class="validation-message"></label>
-							<input type="text" th:field="*{lastName}"
-								placeholder="Last Name" class="form-control" /> 
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-9">
-							<input type="text" th:field="*{email}" placeholder="Email"
-								class="form-control" /> <label
-								th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-								class="validation-message"></label>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-9">
-							<input type="password" th:field="*{password}"
-								placeholder="Password" class="form-control" /> <label
-								th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-								class="validation-message"></label>
-						</div>
-					</div>
+	<header class="main-header">
+		<div th:replace="fragments/mainView :: header"></div>
+	</header>
+	<!-- Left side column. contains the logo and sidebar -->
+	<aside class="main-sidebar">
+		<!-- sidebar: style can be found in sidebar.less -->
+		<div th:replace="fragments/mainView :: mainMenu"></div>
+		<!-- /.sidebar -->
+	</aside>
 
-					<div class="form-group">
-						<div class="col-sm-9">
-							<button type="submit" class="btn btn-primary btn-block">Register User</button>
+	<div class="content-wrapper">
+		<section class="content-header">
+			<h1>
+				Registrar Usuario
+			</h1>
+		</section>
+
+		<section th:if="${userEdit == null}" class="content">
+			<div class="row">
+				<!-- left column -->
+				<div class="col-md-12">
+					<!-- general form elements -->
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">Registrar</h3>
 						</div>
+						<form autocomplete="off" action="#" th:action="@{/registration}" th:object="${user}" method="post">
+							<div class="box-body">
+								<div class="form-group">
+									<label >Nombre</label>
+									<input type="text" th:field="*{name}" th:required="required" class="form-control" >
+								</div>
+								<div class="form-group">
+									<label >Apellido</label>
+									<input type="text" th:field="*{lastName}" th:required="required" class="form-control" >
+								</div>
+								<div class="form-group">
+									<label  >Email</label>
+									<input type="text" th:field="*{email}" placeholder="Email"
+										   class="form-control" >
+								</div>
+
+								<div class="form-group">
+									<label  >Password</label>
+									<input type="password" th:field="*{password}"
+										   placeholder="Password" class="form-control" >
+								</div>
+
+							</div>
+							<div class="box-footer">
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</div>
+
+							<span th:utext="${successMessage}"></span>
+
+						</form>
 					</div>
-					
-					<span th:utext="${successMessage}"></span>
-					
-					
-				</form>
+				</div>
 			</div>
-		</div>
-	</div>
+		</section>
 
+		<!--EDITAR USER-->
+		<section th:if="${userEdit}" class="content">
+			<div class="row">
+				<!-- left column -->
+				<div class="col-md-12">
+					<!-- general form elements -->
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">Editar</h3>
+						</div>
+						<form autocomplete="off" action="#" th:action="@{/editUser}" th:object="${userEdit}" method="post">
+							<div class="box-body">
+								<div class="form-group">
+									<label >Nombre</label>
+									<input type="text" th:field="*{name}" th:required="required" class="form-control" >
+								</div>
+								<div class="form-group">
+									<label >Apellido</label>
+									<input type="text" th:field="*{lastName}" th:required="required" class="form-control" >
+								</div>
+								<div class="form-group">
+									<label  >Email</label>
+									<input type="text" th:field="*{email}" placeholder="Email"
+										   class="form-control" >
+								</div>
+
+								<div class="form-group">
+									<label>Rol</label>
+									<select th:field="*{roles}" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+										<option th:each="rol : ${roles}" th:value="${rol.id}" th:text="${rol.role}"></option>
+									</select>
+								</div>
+								<div class="form-group">
+									<div>
+										<input th:field="*{active}" type="radio" name="Activado" value=1 checked="checked" />Activado
+									</div>
+									<div>
+										<input th:field="*{active}" type="radio" name="Desactivado" value=0 />Desactivado
+									</div>
+								</div>
+								<input type="hidden" th:field="*{id}" />
+								<div class="form-group">
+									<label  >Password</label>
+									<input type="password" th:field="*{password}"
+										   placeholder="Password" class="form-control" >
+								</div>
+
+							</div>
+							<div class="box-footer">
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</div>
+
+							<span th:utext="${successMessage}"></span>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	<!-- /.content-wrapper -->
+	<div th:replace="fragments/mainView :: footer"></div>
+
+	<div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+<SCRIPTS><!-- MAIN SCRIPTS-->
+	<!-- jQuery 3 -->
+	<script th:inline="javascript" type="text/javascript">
+
+        function functionAlert(response){
+
+            // Escuchamos el evento 'change' del input donde cargamos el archivo
+            $('input[type=file]').change(function () {
+                var filePath = $(this).val();
+                console.log(filePath);
+            });
+
+        }
+
+	</script>
+	<script href="../js/jquery/dist/jquery.min.js" th:src="@{/js/jquery/dist/jquery.min.js}" th:inline="javascript"/>
+	<script href="../js/jquery-ui/jquery-ui.min.js" th:src="@{/js/jquery-ui/jquery-ui.min.js}" th:inline="javascript"/>
+
+	<script type="text/javascript">
+        $.widget.bridge('uibutton', $.ui.button);
+	</script>
+	<!-- Bootstrap 3.3.7 -->
+	<script href="../js/bootstrap/dist/js/bootstrap.min.js" th:src="@{/js/bootstrap/dist/js/bootstrap.min.js}"
+			th:inline="javascript"/>
+	<!-- Material Design -->
+	<script href="../js/material.min.js" th:src="@{/js/material.min.js}" th:inline="javascript"/>
+	<script href="../js/ripples.js" th:src="@{/js/ripples.js}" th:inline="javascript"/>
+	<script type="text/javascript">
+        $.material.init();
+	</script>
+	<!-- AdminLTE App -->
+	<script href="../js/adminlte.min.js" th:src="@{/js/adminlte.min.js}" th:inline="javascript"/>
+	<!-- AdminLTE for demo purposes -->
+	<script href="../js/demo.js" th:src="@{/js/demo.js}" th:inline="javascript"/>
+
+</SCRIPTS>
 </body>
 </html>

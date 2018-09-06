@@ -32,6 +32,7 @@
   background-color: #ce563f;
   border-color: rgba(0, 0, 0, 0.2);
 }
+html, body, #map_canvas { margin: 0; padding: 0; height: 100% }
 .btn.btn-social.btn-adn:hover,
 .btn.btn-social-icon.btn-adn:hover {
   color: #fff;
