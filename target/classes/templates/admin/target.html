@@ -61,7 +61,7 @@
       </h1>
     </section>
 
-    <section class="content">
+    <section th:if="${marcadorEdit} == null" class="content">
       <div class="row">
         <!-- left column -->
         <div class="col-md-12">
@@ -90,19 +90,68 @@
                 </div>
                 <div>
                   <label>Cargar Imagen</label>
-                  <input type="file" name="fileImage" />
+                  <input type="file" th:required="required" name="fileImage" />
 
                   <p class="help-block">Seleccione una imagen.</p>
                 </div>
                 <div>
                   <label>Cargar Video</label>
-                  <input type="file" name="fileVideo" />
+                  <input type="file" th:required="required" name="fileVideo" />
 
                   <p class="help-block">Seleccione un video.</p>
                 </div>
               </div>
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--EDITAR USER-->
+    <section th:if="${marcadorEdit}" class="content">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Registrar</h3>
+            </div>
+            <div th:if="${fileEmpty}" class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <h4><i class="icon fa fa-ban"></i> Error!</h4>
+              <p th:text="${fileEmpty}"></p>
+            </div>
+            <div th:if="${fileSuccess}" class="alert alert-success alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <h4><i class="icon fa fa-check"></i> Ok!</h4>
+              <p th:text="${fileSuccess}"></p>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form method="POST" th:action="@{/editMarcador}" th:object="${marcadorEdit}" enctype="multipart/form-data">
+              <div class="box-body">
+                <div class="form-group">
+                  <label>Nombre Target</label>
+                  <input type="text" name="name" th:field="*{name}" th:required="required" class="form-control" id="name" >
+                </div>
+                <input type="hidden" th:field="*{targetId}" >
+                <input type="hidden" th:field="*{id}" >
+                <div class="form-group">
+                  <label>Estado</label>
+                  <div>
+                    <input th:field="*{active}" type="radio" name="Activado" value=1 checked="checked" />Activado
+                  </div>
+                  <div>
+                    <input th:field="*{active}" type="radio" name="Desactivado" value=0 />Desactivado
+                  </div>
+                </div>
+              </div>
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Guardar</button>
               </div>
             </form>
           </div>

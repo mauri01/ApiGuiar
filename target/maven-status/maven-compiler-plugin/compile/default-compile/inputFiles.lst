@@ -8,12 +8,16 @@ E:\Tesis\BackendTesis\Prueba\SpringSecurityLoginTutorial-master\src\main\java\co
 E:\Tesis\BackendTesis\Prueba\SpringSecurityLoginTutorial-master\src\main\java\com\example\service\FileService.java
 E:\Tesis\BackendTesis\Prueba\SpringSecurityLoginTutorial-master\src\main\java\com\example\model\User.java
 E:\Tesis\BackendTesis\Prueba\SpringSecurityLoginTutorial-master\src\main\java\com\example\service\TargetStatusPoller.java
+E:\Tesis\BackendTesis\Prueba\SpringSecurityLoginTutorial-master\src\main\java\com\example\repository\LocationRepository.java
 E:\Tesis\BackendTesis\Prueba\SpringSecurityLoginTutorial-master\src\main\java\com\example\service\UserServiceImpl.java
 E:\Tesis\BackendTesis\Prueba\SpringSecurityLoginTutorial-master\src\main\java\com\example\model\Role.java
 E:\Tesis\BackendTesis\Prueba\SpringSecurityLoginTutorial-master\src\main\java\com\example\service\TargetState.java
 E:\Tesis\BackendTesis\Prueba\SpringSecurityLoginTutorial-master\src\main\java\com\example\service\UserService.java
 E:\Tesis\BackendTesis\Prueba\SpringSecurityLoginTutorial-master\src\main\java\com\example\configuration\WebMvcConfig.java
+E:\Tesis\BackendTesis\Prueba\SpringSecurityLoginTutorial-master\src\main\java\com\example\configuration\S3Config.java
 E:\Tesis\BackendTesis\Prueba\SpringSecurityLoginTutorial-master\src\main\java\com\example\controller\LoginController.java
 E:\Tesis\BackendTesis\Prueba\SpringSecurityLoginTutorial-master\src\main\java\com\example\service\VuforiaService.java
+E:\Tesis\BackendTesis\Prueba\SpringSecurityLoginTutorial-master\src\main\java\com\example\service\LocationService.java
 E:\Tesis\BackendTesis\Prueba\SpringSecurityLoginTutorial-master\src\main\java\com\example\service\TargetStatusListener.java
+E:\Tesis\BackendTesis\Prueba\SpringSecurityLoginTutorial-master\src\main\java\com\example\model\LocationView.java
 E:\Tesis\BackendTesis\Prueba\SpringSecurityLoginTutorial-master\src\main\java\com\example\model\Location.java

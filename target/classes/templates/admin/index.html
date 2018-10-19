@@ -82,9 +82,8 @@
                     <!-- small box -->
                     <div class="small-box bg-green">
                         <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                            <p>En construccion</p>
+                            <h3 th:text="${percentRelation}+'%'"><sup style="font-size: 20px">%</sup></h3>
+                            <p>Marcadores Relacionados</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
@@ -109,13 +108,13 @@
                     <!-- small box -->
                     <div class="small-box bg-red">
                         <div class="inner">
-                            <h3>65</h3>
-
+                            <h3 th:text="${locations.size()}"></h3>
                             <p>Ubicaciones registradas</p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-map-marker"></i>
                         </div>
+                        <a th:href="@{${'/admin/location/list'}}" class="small-box-footer">Mas Informacion <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -143,7 +142,11 @@
                                     <td th:text="${object.videoUrl}"></td>
                                     <td th:if="${object.active}"><span class="label label-success">Activo</span></td>
                                     <td th:if="${object.active == false}"><span class="label label-danger">Inactivo</span></td>
-                                    <td><a th:href="@{${'/target/'+object.id}}" class="fa fa-search"></a></td>
+                                    <td>
+                                        <a th:href="@{${'/target/'+object.id}}" class="fa fa-search"></a>
+                                        <a th:href="@{${'/target/'+object.id+'/edit'}}" class="fa fa fa-pencil"></a>
+                                        <a th:href="@{${'/target/'+object.id+'/relationship'}}" class="fa fa-map-marker"></a>
+                                    </td>
                                 </tr>
                             </table>
                         </div>

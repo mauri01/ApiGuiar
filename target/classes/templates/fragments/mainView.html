@@ -3,7 +3,7 @@
 <!--Fragment of header-->
     <div th:fragment="header">
         <!-- Logo -->
-        <a href="../../../../../../MaterialAdminLTE-master/index2.html" class="logo">
+        <a th:href="@{/admin/home}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>AR</b></span>
             <!-- logo for regular state and mobile devices -->
@@ -48,7 +48,7 @@
             </div>-->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
-                <li class="header">MAIN NAVIGATION</li>
+                <li class="header">MENU DE NAVEGACION</li>
                 <li><a th:href="@{/admin/home}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
                <!-- <li><a th:href="@{/admin/target}"><i class="fa fa-upload"></i> <span>Targets</span></a></li>
                 <li>
@@ -161,10 +161,9 @@
     <div th:fragment="footer">
         <footer class="main-footer">
             <div class="pull-right hidden-xs">
-                <b>Version</b> 2.4.0
+                <b>Version</b> 1.0
             </div>
-            <strong>Copyright &copy; 2014-2018 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>, <a href="https://fezvrasta.github.io">Federico Zivolo</a> and <a href="https://ducthanhnguyen.github.io">Thanh Nguyen</a>.</strong> All rights
-            reserved.
+            <strong>guiAR <a href="http://almsaeedstudio.com">Almsaeed Studio</a>
         </footer>
     </div>
 <!-- //  -->

@@ -17,10 +17,10 @@ public class Location {
     private int id;
 
     @Column(name = "longitud")
-    long  longitud;
+    String longitud;
 
     @Column(name = "latitud")
-    long  latitud;
+    String latitud;
 
     @Column(name = "nombre")
     String  nombre;
@@ -31,4 +31,54 @@ public class Location {
     @OneToMany(cascade= CascadeType.ALL)
     @JoinColumn(name="location")
     private List<TargetManager> targetManagers;
+
+    public String getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
+    }
+
+    public String getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(String latitud) {
+        this.latitud = latitud;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getNombdescripcionre() {
+        return nombdescripcionre;
+    }
+
+    public void setNombdescripcionre(String nombdescripcionre) {
+        this.nombdescripcionre = nombdescripcionre;
+    }
+
+    public List<TargetManager> getTargetManagers() {
+        return targetManagers;
+    }
+
+    public void setTargetManagers(List<TargetManager> targetManagers) {
+        this.targetManagers = targetManagers;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
 }

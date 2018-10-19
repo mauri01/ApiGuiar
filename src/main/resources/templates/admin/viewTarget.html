@@ -70,7 +70,7 @@
       </h1>
     </section>
 
-    <section class="content">
+    <section th:if="${lcoationAll} == null" class="content">
       <div class="row">
         <!-- left column -->
         <div class="col-md-12">
@@ -81,8 +81,10 @@
               <div class="box-body box-profile">
                 <img class="data-img-target img-responsive img-circle" th:src="'data:image/png;base64,'+${encodeImage}" alt="User profile picture">
 
-                <h3 class="profile-username text-center">Nina Mcintire</h3>
-                <p class="text-muted text-center">Software Engineer</p>
+                <h2 class="profile-username text-center" th:text="${nombreMarcador}"></h2>
+                <h3 th:if="${marcadorFind.location != null}" class="profile-username text-center" th:text="'Relacion:'+${marcadorFind.location.nombre}"></h3>
+                <h3 th:if="${marcadorFind.location == null}" class="profile-username text-center" th:text="'No posee relacion con una localidad.'"></h3>
+                <p class="text-muted text-center" th:text="${videoMarcador}"></p>
 
               </div>
             <!-- /.box-header -->
@@ -93,6 +95,42 @@
       </div>
       </div>
     </section>
+
+    <!--Relation with location-->
+    <section th:if="${lcoationAll}" class="content">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+
+              <div class="box-body box-profile">
+                <img class="data-img-target img-responsive img-circle" th:src="'data:image/png;base64,'+${encodeImage}" alt="User profile picture">
+
+                <h3 class="profile-username text-center" th:text="${nombreMarcador}"></h3>
+                <p class="text-muted text-center" th:text="${videoMarcador}"></p>
+
+                <form autocomplete="off" action="#" th:action="@{/relationLocation}" th:object="${locationView}" method="post">
+                <label>Relacionar con:</label>
+                <select  th:field="*{locationId}" class="form-control select2 select2-hidden-accessible">
+                  <option th:each="location : ${lcoationAll}"  th:name="locationId" th:value="${location.id}" th:text="${location.nombre}"></option>
+                </select>
+                  <input type="hidden" th:value="${target.id}" name="id" th:id="target">
+                  <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Relacionar</button>
+                  </div>
+                </form>
+              </div>
+              <!-- /.box-header -->
+              <!-- form start -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
   <!-- /.content-wrapper -->
   <div th:replace="fragments/mainView :: footer"></div>

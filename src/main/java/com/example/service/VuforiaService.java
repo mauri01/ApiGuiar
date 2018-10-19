@@ -1,7 +1,9 @@
 package com.example.service;
 
+import com.example.model.TargetManager;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +15,6 @@ import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.apache.commons.io.FileUtils;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Date;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -27,8 +25,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.cookie.DateUtils;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
-
-import com.example.service.SignatureBuilder;
 
 @Service("vuforiaService")
 public class VuforiaService {
@@ -45,6 +41,7 @@ public class VuforiaService {
     private final float pollingIntervalMinutes = 60;//poll at 1-hour interval
 
     //Endpoint para obtener todos los targets de vuforia
+
     public void getTargets() throws URISyntaxException, ClientProtocolException, IOException {
         HttpGet getRequest = new HttpGet();
         HttpClient client = new DefaultHttpClient();
@@ -63,7 +60,7 @@ public class VuforiaService {
 
     // Endpoint para insertar un nuevo target
 
-    public String postTarget(String name, String pathImage,String pathVideo) throws URISyntaxException, ClientProtocolException, IOException, JSONException {
+    public JSONObject postTarget(String name, String pathImage, String pathVideo) throws URISyntaxException, ClientProtocolException, IOException, JSONException {
         HttpPost postRequest = new HttpPost();
         HttpClient client = new DefaultHttpClient();
         postRequest.setURI(new URI(url + "/targets"));
@@ -79,10 +76,10 @@ public class VuforiaService {
 
         JSONObject jobj = new JSONObject(responseBody);
 
-        String uniqueTargetId = jobj.has("target_id") ? jobj.getString("target_id") : "";
-        System.out.println("\nCreated target with id: " + uniqueTargetId);
+        //String uniqueTargetId = jobj.has("target_id") ? jobj.getString("target_id") : "";
+        //System.out.println("\nCreated target with id: " + uniqueTargetId);
 
-        return uniqueTargetId;
+        return jobj;
     }
 
     private void setRequestBody(JSONObject requestBody,String name, String pathImage,String pathVideo) throws IOException, JSONException {
@@ -93,10 +90,12 @@ public class VuforiaService {
         }
         byte[] image = FileUtils.readFileToByteArray(imageFile);
         requestBody.put("name", name); // Mandatory
-        requestBody.put("width", 320.0); // Mandatory
+        requestBody.put("width", 1.0); // Mandatory
         requestBody.put("image", Base64.encodeBase64String(image)); // Mandatory
         requestBody.put("active_flag", 1); // Optional
-        requestBody.put("application_metadata", Base64.encodeBase64String("Vuforia test metadata".getBytes())); // Optional
+        JSONObject json = new JSONObject();
+        json.put("videoUrl", pathVideo);
+        requestBody.put("application_metadata", Base64.encodeBase64String(json.toString().getBytes())); // Optional
     }
 
     private void setHeadersPost(HttpUriRequest request) {
@@ -121,5 +120,40 @@ public class VuforiaService {
                 System.out.println("Target is now in 'success' status");
             }
         }
+    }
+
+    public JSONObject updateTarget(TargetManager target) throws URISyntaxException, ClientProtocolException, IOException, JSONException {
+        HttpPut putRequest = new HttpPut();
+        HttpClient client = new DefaultHttpClient();
+        putRequest.setURI(new URI(url + "/targets/" + target.getTargetId()));
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("name", target.getName());
+        requestBody.put("active_flag", target.isActive());
+
+        //setRequestBody(requestBody);
+        putRequest.setEntity(new StringEntity(requestBody.toString()));
+        setHeadersUpdate(putRequest); // Must be done after setting the body
+
+        HttpResponse response = client.execute(putRequest);
+        /*System.out.println(EntityUtils.toString(response.getEntity()));
+
+        String responseBody = EntityUtils.toString(response.getEntity());
+        System.out.println(responseBody);
+
+        JSONObject responseObject = );*/
+        return new JSONObject(EntityUtils.toString(response.getEntity()));
+
+    }
+
+    private void setRequestBody(JSONObject requestBody) throws IOException, JSONException {
+        requestBody.put("active_flag", true); // Optional
+        requestBody.put("application_metadata", Base64.encodeBase64String("Vuforia test metadata".getBytes())); // Optional
+    }
+
+    private void setHeadersUpdate(HttpUriRequest request) {
+        SignatureBuilder sb = new SignatureBuilder();
+        request.setHeader(new BasicHeader("Date", DateUtils.formatDate(new Date()).replaceFirst("[+]00:00$", "")));
+        request.setHeader(new BasicHeader("Content-Type", "application/json"));
+        request.setHeader("Authorization", "VWS " + accessKey + ":" + sb.tmsSignature(request, secretKey));
     }
 }

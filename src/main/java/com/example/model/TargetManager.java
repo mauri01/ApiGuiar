@@ -76,4 +76,12 @@ public class TargetManager {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 }
