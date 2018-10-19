@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c018f618-7e65-4a6b-8a79-9cd97e2c1356" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/FWO_2560x1600.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fuvoriaPrueba.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/logo-2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/v1.png" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/mainView.html" afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/mainView.html" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -29,8 +33,8 @@
       <file leaf-file-name="mainView.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/resources/templates/fragments/mainView.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="157" column="12" lean-forward="true" selection-start-line="157" selection-start-column="12" selection-end-line="157" selection-end-column="12" />
+            <state relative-caret-position="280">
+              <caret line="165" column="62" lean-forward="false" selection-start-line="165" selection-start-column="62" selection-end-line="165" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -1118,15 +1122,15 @@
       <workItem from="1539219176893" duration="3163000" />
       <workItem from="1539396841469" duration="1229000" />
       <workItem from="1539457622812" duration="832000" />
-      <workItem from="1539609446453" duration="7686000" />
+      <workItem from="1539609446453" duration="8365000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="253856000" />
+    <option name="totallyTimeSpent" value="254535000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1660,8 +1664,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/fragments/mainView.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="157" column="12" lean-forward="true" selection-start-line="157" selection-start-column="12" selection-end-line="157" selection-end-column="12" />
+        <state relative-caret-position="280">
+          <caret line="165" column="62" lean-forward="false" selection-start-line="165" selection-start-column="62" selection-end-line="165" selection-end-column="62" />
           <folding />
         </state>
       </provider>
