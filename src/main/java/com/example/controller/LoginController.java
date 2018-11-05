@@ -144,7 +144,7 @@ public class LoginController {
 			//modelAndView.setViewName("registration");
 
 		}
-		return new ModelAndView("redirect:/admin/user");
+		return new ModelAndView("redirect:admin/user");
 	}
 	
 	@RequestMapping(value="/admin/home", method = RequestMethod.GET)
@@ -157,7 +157,7 @@ public class LoginController {
 				cantRelation++;
 			}
 		}
-		int porcentRelationTarget = (cantRelation * 100)/listTarget.size();
+		int porcentRelationTarget = cantRelation == 0 ? 0 : (cantRelation * 100)/listTarget.size();
 		List<User> listUser = userService.findAllUser();
 		List<Location> locations = locationService.getLocationAll();
 		modelAndView.addObject("targets", listTarget);
@@ -212,13 +212,17 @@ public class LoginController {
 		Location location = locationService.findLocationById(locationView.getLocationId());
 		target.setLocation(location);
 		targetManagerRepository.save(target);
-		return new ModelAndView("redirect:/admin/home");
+		return new ModelAndView("redirect:admin/home");
 	}
 
 	@RequestMapping(value = "/location/edit", method = RequestMethod.POST)
 	public ModelAndView editLocationPost(@Valid Location location, BindingResult bindingResult) {
 		locationService.update(location);
-		return new ModelAndView("redirect:admin/listLocation");
+		ModelAndView modelAndView = new ModelAndView();
+		List<Location> locations = locationService.getLocationAll();
+		modelAndView.addObject("locations", locations);
+		modelAndView.setViewName("admin/listLocation");
+		return modelAndView;
 	}
 
 	@RequestMapping(value="/admin/user", method = RequestMethod.GET)
@@ -234,7 +238,7 @@ public class LoginController {
 	public ModelAndView removeUser(@PathVariable("id") int id){
 		User user = userService.findUserById(id);
 		userService.softDeleteUser(user);
-		return new ModelAndView("redirect:/admin/user");
+		return new ModelAndView("redirect:admin/user");
 	}
 
 	@GetMapping("/user/{id}/edit")
@@ -267,7 +271,7 @@ public class LoginController {
 	public ModelAndView singleFileUpload(@RequestParam("fileImage") MultipartFile fileImage,@RequestParam("fileVideo") MultipartFile fileVideo,
 								   @RequestParam("name") String name,RedirectAttributes redirectAttributes) {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/admin/target");
+		modelAndView.setViewName("admin/target");
 		String message;
 
 		if (!fileImage.getContentType().contains("image")){
@@ -320,11 +324,11 @@ public class LoginController {
 									 @RequestParam("lng") String longitud, @RequestParam("descrip") String descrip){
 		try{
 			locationService.saveData(lugar,longitud,latitud,descrip);
-			return new ModelAndView("redirect:/admin/home");
+			return new ModelAndView("redirect:admin/home");
 		}catch (Exception e){
 			ModelAndView modelAndView = new ModelAndView();
 			modelAndView.addObject("error", "Error al cargar el sitio, vuelva a intentar");
-			modelAndView.setViewName("/admin/location");
+			modelAndView.setViewName("admin/location");
 			return modelAndView;
 		}
 	}
@@ -333,7 +337,7 @@ public class LoginController {
 	public ModelAndView verTarget(@PathVariable("id") int id){
 		TargetManager target = fileService.getTarget(id);
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/admin/viewTarget");
+		modelAndView.setViewName("admin/viewTarget");
 		modelAndView.addObject("nombreMarcador", target.getName());
 		modelAndView.addObject("marcadorFind", target);
 		modelAndView.addObject("videoMarcador", target.getVideoUrl());
@@ -358,7 +362,7 @@ public class LoginController {
 		TargetManager target = fileService.getTarget(id);
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("marcadorEdit", target);
-		modelAndView.setViewName("/admin/target");
+		modelAndView.setViewName("admin/target");
 		return modelAndView;
 	}
 
@@ -366,7 +370,7 @@ public class LoginController {
 	public ModelAndView relationshipTarget(@PathVariable("id") int id){
 		TargetManager target = fileService.getTarget(id);
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/admin/viewTarget");
+		modelAndView.setViewName("admin/viewTarget");
 		modelAndView.addObject("nombreMarcador", target.getName());
 		modelAndView.addObject("target", target);
 		modelAndView.addObject("videoMarcador", target.getVideoUrl());
@@ -408,7 +412,7 @@ public class LoginController {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return new ModelAndView("redirect:/admin/home");
+		return new ModelAndView("redirect:admin/home");
 	}
 
 	@RequestMapping(value="/error", method = RequestMethod.GET)

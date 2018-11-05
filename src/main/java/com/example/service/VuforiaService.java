@@ -76,9 +76,6 @@ public class VuforiaService {
 
         JSONObject jobj = new JSONObject(responseBody);
 
-        //String uniqueTargetId = jobj.has("target_id") ? jobj.getString("target_id") : "";
-        //System.out.println("\nCreated target with id: " + uniqueTargetId);
-
         return jobj;
     }
 
